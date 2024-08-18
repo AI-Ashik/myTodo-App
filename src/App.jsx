@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { IoMdCheckmarkCircle } from "react-icons/io";
+import { MdDeleteForever } from "react-icons/md";
 
 const App = () => {
   const [inputValue, setInputValue] = useState("");
@@ -46,6 +48,29 @@ const App = () => {
             </button>
           </div>
         </form>
+
+        <section className="mt-4">
+          <ul className="space-y-2">
+            {task.map((currTask, index) => {
+              return (
+                <li
+                  key={index}
+                  className="flex items-center justify-between p-2 bg-gray-700 rounded-lg shadow hover:bg-gray-600 transition"
+                >
+                  <span className="text-white">{currTask}</span>
+                  <div className="flex space-x-2">
+                    <button className="text-red-400 hover:text-red-300 transition">
+                      <MdDeleteForever className="w-5 h-5" />
+                    </button>
+                    <button className="text-green-400 hover:text-green-300 transition">
+                      <IoMdCheckmarkCircle className="w-5 h-5" />
+                    </button>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       </section>
     </section>
   );

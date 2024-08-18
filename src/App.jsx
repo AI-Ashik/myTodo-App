@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 
 const App = () => {
   const [inputValue, setInputValue] = useState("");
   const [task, setTask] = useState([]);
+  const [dateTime, setDateTime] = useState("");
 
   const handleInputChange = (value) => {
     setInputValue(value);
@@ -21,10 +22,23 @@ const App = () => {
     setInputValue("");
   };
 
+  useEffect(() => {
+    const intervalDateTime = setInterval(() => {
+      const date = new Date();
+      const formattedDate = date.toLocaleDateString();
+      const formattedTime = date.toLocaleTimeString();
+      setDateTime(`${formattedDate} - ${formattedTime}`);
+    }, 1000);
+    return () => clearInterval(intervalDateTime);
+  }, []);
+
   return (
     <section className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
       <header className="mb-6">
         <h1 className="text-4xl font-bold text-center text-white">Todo App</h1>
+        <h3 className="text-xl font-bold text-center text-white mt-3">
+          {dateTime}
+        </h3>
       </header>
       {/* Updated width for the main section */}
       <section className="bg-gray-800 shadow-md rounded-lg p-6 w-full max-w-lg">

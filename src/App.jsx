@@ -22,13 +22,21 @@ const App = () => {
     setInputValue("");
   };
 
+  const handleTodoDelete = (value) => {
+    setTask(task.filter((currTask) => value !== currTask));
+  };
+
+  const handleClearAllTask = () => {
+    setTask([]);
+  };
+
   useEffect(() => {
     const intervalDateTime = setInterval(() => {
       const date = new Date();
       const formattedDate = date.toLocaleDateString();
       const formattedTime = date.toLocaleTimeString();
-      setDateTime(`${formattedDate} - ${formattedTime}`);
-    }, 1000);
+      setDateTime(`Date : ${formattedDate} - Time: ${formattedTime}`);
+    }, 10);
     return () => clearInterval(intervalDateTime);
   }, []);
 
@@ -48,7 +56,7 @@ const App = () => {
               type="text"
               autoComplete="off"
               placeholder="Add a new todo"
-              className="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12"
               value={inputValue}
               onChange={(e) => handleInputChange(e.target.value)}
             />
@@ -56,7 +64,7 @@ const App = () => {
           <div>
             <button
               type="submit"
-              className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-r-lg hover:bg-blue-500 transition duration-200"
+              className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-r-lg hover:bg-blue-500 transition duration-200 h-12"
             >
               Submit
             </button>
@@ -73,7 +81,10 @@ const App = () => {
                 >
                   <span className="text-white">{currTask}</span>
                   <div className="flex space-x-2">
-                    <button className="text-red-400 hover:text-red-300 transition">
+                    <button
+                      onClick={() => handleTodoDelete(currTask)}
+                      className="text-red-400 hover:text-red-300 transition"
+                    >
                       <MdDeleteForever className="w-5 h-5" />
                     </button>
                     <button className="text-green-400 hover:text-green-300 transition">
@@ -85,6 +96,14 @@ const App = () => {
             })}
           </ul>
         </section>
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={handleClearAllTask}
+            className="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-red-500 transition duration-200"
+          >
+            Clear All
+          </button>
+        </div>
       </section>
     </section>
   );

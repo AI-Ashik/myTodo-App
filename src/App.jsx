@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
+import { TodoForm } from "./components/TodoForm";
 
 const App = () => {
-  const [inputValue, setInputValue] = useState("");
   const [task, setTask] = useState([]);
   const [dateTime, setDateTime] = useState("");
 
-  const handleInputChange = (value) => {
-    setInputValue(value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (inputValue) => {
     if (!inputValue) return;
-    if (task.includes(inputValue)) {
-      setInputValue("");
-      return;
-    }
+    if (task.includes(inputValue)) return;
+
     setTask((prevTask) => [...prevTask, inputValue]);
-    setInputValue("");
   };
 
   const handleTodoDelete = (value) => {
@@ -50,27 +42,7 @@ const App = () => {
       </header>
       {/* Updated width for the main section */}
       <section className="bg-gray-800 shadow-md rounded-lg p-6 w-full max-w-lg">
-        <form className="flex" onSubmit={handleSubmit}>
-          <div className="flex-grow">
-            <input
-              type="text"
-              autoComplete="off"
-              placeholder="Add a new todo"
-              className="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12"
-              value={inputValue}
-              onChange={(e) => handleInputChange(e.target.value)}
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-r-lg hover:bg-blue-500 transition duration-200 h-12"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-
+        <TodoForm onAddTodo={handleSubmit} />
         <section className="mt-4">
           <ul className="space-y-2">
             {task.map((currTask, index) => {

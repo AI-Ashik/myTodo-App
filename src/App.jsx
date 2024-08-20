@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { IoMdCheckmarkCircle } from "react-icons/io";
-import { MdDeleteForever } from "react-icons/md";
 import { TodoForm } from "./components/TodoForm";
+import { TodoList } from "./components/TodoList";
 
 const App = () => {
   const [task, setTask] = useState([]);
@@ -47,23 +46,11 @@ const App = () => {
           <ul className="space-y-2">
             {task.map((currTask, index) => {
               return (
-                <li
+                <TodoList
                   key={index}
-                  className="flex items-center justify-between p-2 bg-gray-700 rounded-lg shadow hover:bg-gray-600 transition"
-                >
-                  <span className="text-white">{currTask}</span>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleTodoDelete(currTask)}
-                      className="text-red-400 hover:text-red-300 transition"
-                    >
-                      <MdDeleteForever className="w-5 h-5" />
-                    </button>
-                    <button className="text-green-400 hover:text-green-300 transition">
-                      <IoMdCheckmarkCircle className="w-5 h-5" />
-                    </button>
-                  </div>
-                </li>
+                  data={currTask}
+                  onHandleDeleteTodo={handleTodoDelete}
+                />
               );
             })}
           </ul>

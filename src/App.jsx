@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TodoForm } from "./components/TodoForm";
 import { TodoList } from "./components/TodoList";
+import { DateTime } from "./components/dateTime";
 
 const App = () => {
   const [task, setTask] = useState([]);
-  const [dateTime, setDateTime] = useState("");
 
   const handleSubmit = (inputValue) => {
     if (!inputValue) return;
@@ -21,23 +21,11 @@ const App = () => {
     setTask([]);
   };
 
-  useEffect(() => {
-    const intervalDateTime = setInterval(() => {
-      const date = new Date();
-      const formattedDate = date.toLocaleDateString();
-      const formattedTime = date.toLocaleTimeString();
-      setDateTime(`Date : ${formattedDate} - Time: ${formattedTime}`);
-    }, 10);
-    return () => clearInterval(intervalDateTime);
-  }, []);
-
   return (
     <section className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
       <header className="mb-6">
         <h1 className="text-4xl font-bold text-center text-white">Todo App</h1>
-        <h3 className="text-xl font-bold text-center text-white mt-3">
-          {dateTime}
-        </h3>
+        <DateTime />
       </header>
       {/* Updated width for the main section */}
       <section className="bg-gray-800 shadow-md rounded-lg p-6 w-full max-w-lg">

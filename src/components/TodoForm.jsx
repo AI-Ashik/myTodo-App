@@ -2,15 +2,15 @@ import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 export const TodoForm = ({ onAddTodo }) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState({});
   const handleInputChange = (value) => {
-    setInputValue(value);
+    setInputValue({ id: value, content: value, checked: false });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     onAddTodo(inputValue);
-    setInputValue("");
+    setInputValue({ id: "", content: "", checked: false });
   };
   return (
     <form className="flex" onSubmit={handleSubmit}>
@@ -20,7 +20,7 @@ export const TodoForm = ({ onAddTodo }) => {
           autoComplete="off"
           placeholder="Add a new todo"
           className="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12"
-          value={inputValue}
+          value={inputValue.content}
           onChange={(e) => handleInputChange(e.target.value)}
         />
       </div>

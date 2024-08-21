@@ -7,18 +7,30 @@ const App = () => {
   const [task, setTask] = useState([]);
 
   const handleSubmit = (inputValue) => {
-    if (!inputValue) return;
-    if (task.includes(inputValue)) return;
-
-    setTask((prevTask) => [...prevTask, inputValue]);
+    const { id, content, checked } = inputValue;
+    if (!content) return;
+    const ifTodoContentMatched = task.find((currTask) => currTask === content);
+    if (ifTodoContentMatched) return;
+    setTask((prevTask) => [...prevTask, { id, content, checked }]);
   };
 
   const handleTodoDelete = (value) => {
-    setTask(task.filter((currTask) => value !== currTask));
+    setTask(task.filter((currTask) => value !== currTask.content));
   };
 
   const handleClearAllTask = () => {
     setTask([]);
+  };
+
+  const handleCheckedTodo = (taskContent) => {
+    const updatedTask = task.map((currTask) => {
+      if (currTask.content === taskContent) {
+        return { ...currTask, checked: !currTask.checked };
+      } else {
+        return currTask;
+      }
+    });
+    setTask(updatedTask);
   };
 
   return (
@@ -27,17 +39,18 @@ const App = () => {
         <h1 className="text-4xl font-bold text-center text-white">Todo App</h1>
         <DateTime />
       </header>
-      {/* Updated width for the main section */}
       <section className="bg-gray-800 shadow-md rounded-lg p-6 w-full max-w-lg">
         <TodoForm onAddTodo={handleSubmit} />
         <section className="mt-4">
           <ul className="space-y-2">
-            {task.map((currTask, index) => {
+            {task.map((currTask) => {
               return (
                 <TodoList
-                  key={index}
-                  data={currTask}
+                  key={currTask.id}
+                  data={currTask.content}
                   onHandleDeleteTodo={handleTodoDelete}
+                  checked={currTask.checked}
+                  onHandleCheckedTodo={handleCheckedTodo}
                 />
               );
             })}

@@ -42,8 +42,8 @@ const App = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
-      <header className="mb-6">
+    <section className="flex flex-col items-center justify-center min-h-screen bg-gray-900 py-10 px-4">
+      <header className="mb-6 w-full max-w-lg">
         <h1 className="text-4xl font-bold text-center text-white">Todo App</h1>
         <DateTime />
       </header>
